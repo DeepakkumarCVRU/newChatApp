@@ -1,5 +1,5 @@
-import SingIn from "./components/SingIn"
-// import SingUp from "./components/SingUp"
+// import SingIn from "./components/SingIn"
+import SingUp from "./components/SingUp"
 // import Left from "./Home/Left/Left"
 // import LogOut from "./Home/Left/Left1"
 // import Right from "./Home/Right/Right"
@@ -15,8 +15,8 @@ function App() {
         <Right/>
     </div> */}
   
-  {/* <SingUp/> */}
-  <SingIn/>
+  {/* <SingIn/> */}
+  <SingUp/>
  
     </>
   )

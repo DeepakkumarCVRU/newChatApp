@@ -1,5 +1,7 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import useAuth from "../context/useAuth";
+
 const SingUp = () => {
     const {
         register,
@@ -7,6 +9,9 @@ const SingUp = () => {
         getValues,
         formState: { errors },
     } = useForm();
+
+    // this is code which i dont understand right now , all context code i dont understand Ok
+    const [authUser , setAuthUser] = useAuth();
 
     const onSubmit = async (data) => {
         const userInfo = {
@@ -26,6 +31,8 @@ const SingUp = () => {
 
             localStorage.setItem("messanger", JSON.stringify(res.data.user));
 
+            // this is code which i dont understand right now , all context code i dont understand Ok
+            setAuthUser(res.data.user)
             console.log(res.data.user);
 
         } catch (error) {

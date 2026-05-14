@@ -1,13 +1,48 @@
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import useAuth from "../context/useAuth";
+
 
 const SingIn = () => {
   const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+    // this is code which i dont understand right now , all context code i dont understand Ok
+    const [authUser , setAuthUser] = useAuth();
+
+
+   const onSubmit = async (data) => {
+        const userInfo = {
+            email: data.email,
+            password: data.password
+        };
+        console.log(userInfo);
+
+        try {
+            const res = await axios.post(
+                "http://localhost:3001/user/login", 
+                userInfo,
+                {
+                  withCredentials: true
+                }
+            );
+            
+            alert("Login Successful! ");
+
+            localStorage.setItem("messanger", JSON.stringify(res.data.user));
+
+            // this is code which i dont understand right now , all context code i dont understand Ok
+            setAuthUser(res.data.user)
+            console.log(res.data.user);
+
+        } catch (error) {
+          console.log("Login Failed! Wrong username or password");
+            console.log(error.response?.data);
+        }
+    };
 
   return (
     <div>

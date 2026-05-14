@@ -47,6 +47,9 @@ export const SignUp = async (req, res) => {
 export const Login = async (req, res) => {
     try {
         const { email, password } = req.body
+
+        console.log(email, password)
+
         const Userdata = await User.findOne({ email })
         if (!Userdata) {
             return res.status(400).json({ message: "User not found" })
@@ -57,16 +60,15 @@ export const Login = async (req, res) => {
         if (!isMatch) {
             return res.status(400).json({ message: "Incorrect password" })
         }
-
-        const token = create_Token_And_Save_Cokkie(Userdata._id)
+        const token = create_Token(Userdata.id)
 
         // save token in cokkie 
-
         res.cookie("token", token, {
-            httpOnly: true,   // prevent client side XSS 
-            secure: true,
-            sameSite: "Strict"  // prevent client side CSRF
-        })
+            httpOnly: true,
+            secure: false,
+            sameSite: "lax",
+            maxAge: 24 * 60 * 60 * 1000
+        });
 
         res.status(200).json({
             message: "Login successful",

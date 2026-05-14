@@ -3,6 +3,7 @@ import dotenv from "dotenv"
 import mongoose from "mongoose"
 import ConnectDB from "./db/ConnectDB.js"
 import router from "./routes/user.route.js"
+import cors from "cors"
 
 
 dotenv.config()
@@ -10,6 +11,8 @@ dotenv.config()
 
 const app = express()
 app.use(express.json())
+app.use(cors())  // enable cors for all routes
+
 ConnectDB()
 const PORT = process.env.PORT || 3000
 

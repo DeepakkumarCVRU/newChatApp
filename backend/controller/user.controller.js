@@ -1,18 +1,21 @@
-import { create_Token_And_Save_Cokkie } from "../jwt/generateToken.js";
+import { create_Token } from "../jwt/generateToken.js";
 import User from "../model/user.model.js";
 import bcrypt from "bcrypt"
+import cookieParser from "cookie-parser";
 
 
 export const SignUp = async (req, res) => {
     try {
-        const { name, email, password, confirmpassword } = req.body;
+        const { name, email, password, confirmPassword } = req.body;
 
-        if (password !== confirmpassword) {
+        console.log(name, email, password, confirmPassword)
+
+        if (password !== confirmPassword) {
             return res.status(400).json({ message: "Password do not match" });
         }
 
         const Userdata = await User.findOne({ email });
-        console.log(Userdata)
+
         if (Userdata) {
             return res.status(400).json({ message: "User already exists" });
         }
@@ -22,10 +25,19 @@ export const SignUp = async (req, res) => {
         const hashPassword = await bcrypt.hash(password, 10)
 
 
+
+
         const newUser = new User({ name, email, password: hashPassword });
         await newUser.save()
 
-        res.status(201).json(newUser);
+
+        const user = {
+            _id: newUser._id,
+            name: newUser.name,
+            email: newUser.email
+        }
+
+        res.status(201).json({ Message: "new user created successfully", user });
     } catch (error) {
         console.log(error)
         res.status(400).json({ message: error.message });

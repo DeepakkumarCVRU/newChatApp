@@ -95,3 +95,15 @@ export const LogOut = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+
+
+
+export const getUserProfile = async (req, res) => {
+    try {
+        const getAllUsers = await User.find({}, { password: 0 })
+        res.status(200).json(getAllUsers)
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error.message });
+    }
+}

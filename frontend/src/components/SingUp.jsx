@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import useAuth from "../context/useAuth";
+import { useAuth } from "../context/useAuth";
+import { Link } from "react-router-dom";
 
 const SingUp = () => {
     const {
@@ -11,7 +12,8 @@ const SingUp = () => {
     } = useForm();
 
     // this is code which i dont understand right now , all context code i dont understand Ok
-    const [authUser , setAuthUser] = useAuth();
+    const {authUser , setAuthUser} = useAuth();
+    console.log(authUser)
 
     const onSubmit = async (data) => {
         const userInfo = {
@@ -115,6 +117,8 @@ const SingUp = () => {
                             className="border border-blue-500 text-center px-4 py-2 bg-blue-600 cursor-pointer rounded-2xl w-full"
                         />
                     </div>
+                    
+                    <span>Already have an account</span><Link to="/login" className="text-yellow-700"> Login</Link>
                 </div>
             </form>
         </div>

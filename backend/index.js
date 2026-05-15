@@ -5,6 +5,7 @@ import ConnectDB from "./db/ConnectDB.js"
 import router from "./routes/user.route.js"
 import cors from "cors"
 import cookieParser from "cookie-parser"
+import messageRouter from "./routes/message.route.js"
 
 
 dotenv.config()
@@ -22,10 +23,9 @@ ConnectDB()
 const PORT = process.env.PORT || 3000
 
 app.use("/user", router)
+app.use("/message", messageRouter)
 
-app.get("/", (req, res) => {
-    res.send("hello world")
-})
+
 
 
 app.listen(PORT, () => {

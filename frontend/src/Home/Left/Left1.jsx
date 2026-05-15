@@ -6,7 +6,8 @@ import Cookies from "js-cookie";
 function LogOut() {
 
 
-    const [loading , setLoading] = useState(false);
+    // const [loading , setLoading] = useState(false);
+    const [  setLoading] = useState(false);
 
     const hadleLogOut = async ()=>{
         setLoading(true)

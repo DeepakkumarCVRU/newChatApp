@@ -1,5 +1,5 @@
 import Search from "./Search"
-import User from "./user"
+import Users from "./Users"
 
 const Left = () => {
   return (
@@ -10,7 +10,7 @@ const Left = () => {
 
       <hr />
      
-      <User />
+      <Users />
       
     </div>
   )

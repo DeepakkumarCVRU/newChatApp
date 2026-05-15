@@ -100,7 +100,7 @@ export const LogOut = async (req, res) => {
 
 export const getUserProfile = async (req, res) => {
     try {
-        const getAllUsers = await User.find({}, { password: 0 })
+        const getAllUsers = await User.find({ _id: { $ne: req.user._id } }, { password: 0 })
         res.status(200).json(getAllUsers)
     } catch (error) {
         console.log(error)

@@ -4,6 +4,7 @@ import mongoose from "mongoose"
 import ConnectDB from "./db/ConnectDB.js"
 import router from "./routes/user.route.js"
 import cors from "cors"
+import cookieParser from "cookie-parser"
 
 
 dotenv.config()
@@ -11,6 +12,7 @@ dotenv.config()
 
 const app = express()
 app.use(express.json())
+app.use(cookieParser())
 app.use(cors({
     origin: "http://localhost:5173",
     credentials: true

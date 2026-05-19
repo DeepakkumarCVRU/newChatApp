@@ -57,3 +57,31 @@ export const sendMessage = async (req, res) => {
 
 
 }
+
+
+export const getMessage = async (req, res) => {
+    try {
+        const receiverId = req.params.id;  // this id is reciver id
+        const senderId = req.user._id; // current LoggedIn user
+
+        const conversation = await Conversation.findOne({ participants: { $all: [senderId, receiverId] } }).populate("message")
+
+
+        // if (conversation) {
+        //     const messages = await Message.find({ _id: { $in: conversation.message } });
+        //     res.status(200).json({ messages });
+        // }
+
+        if (!conversation) {
+            return res.status(404).json({ message: "Conversation not found", data: [] });
+        }
+
+        // const conversationMessages = conversation.message;     // if you want that show only message then send conversationMessage insted of conversation 
+        // console.log(conversationMessages)
+
+        res.status(200).json({ conversation });
+    } catch (error) {
+        console.log(error)
+        res.status(500).json({ message: error });
+    }
+}

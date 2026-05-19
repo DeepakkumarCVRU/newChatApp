@@ -2,9 +2,9 @@ import express from "express"
 import dotenv from "dotenv"
 import mongoose from "mongoose"
 import ConnectDB from "./db/ConnectDB.js"
-import router from "./routes/user.route.js"
 import cors from "cors"
 import cookieParser from "cookie-parser"
+import router from "./routes/user.route.js"
 import messageRouter from "./routes/message.route.js"
 
 

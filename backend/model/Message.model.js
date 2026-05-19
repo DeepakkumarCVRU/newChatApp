@@ -2,13 +2,15 @@ import mongoose from "mongoose";
 import User from "./user.model.js";
 
 const messageSchema = mongoose.Schema({
-    sender: {
+    senderId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: User,
+        required: true
     },
-    reciever: {
+    receiverId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: User
+        ref: User,
+        required: true
     },
     message: {
         type: String,

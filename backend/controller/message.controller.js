@@ -5,39 +5,55 @@ export const sendMessage = async (req, res) => {
 
     try {
         const { message } = req.body;
-        const { id: reciverId } = req.params;
+        const receiverId = req.params.id;  // this id is reciver id
         const senderId = req.user._id; // current LoggedIn user
 
+        let conversation = await Conversation.findOne({ participants: { $all: [senderId, receiverId] } });
 
-
-        let conversation = await Conversation.findOne({ participants: { $all: [senderId, reciverId] } });
 
         if (!conversation) {
             conversation = await Conversation.create(
                 {
-                    participants: [senderId, reciverId]
+                    participants: [senderId, receiverId]
                 })
 
             const newMessage = await Message({
-                sender: senderId,
-                reciever: reciverId,
-                message: message
+                senderId,
+                receiverId,
+                message
             })
 
             if (newMessage) {
                 await newMessage.save();
                 conversation.message.push(newMessage._id);
                 await conversation.save();
-                res.status(200).json({ message: "Message sent successfully", newMessage });
             }
+            console.log("conversation created and message saved",)
             // await Promise.all([conversation.save(), newMessage.save()]);
+            res.status(200).json({ message: "Message sent successfully", newMessage });
+        } else {
+            console.log("conversation found")
+            const newMessage = await Message({
+                senderId,
+                receiverId,
+                message
+            })
+
+            if (newMessage) {
+                await newMessage.save();
+                conversation.message.push(newMessage._id);
+                await conversation.save();
+            }
+
+            res.status(200).json({ message: "Message sent successfully to existing conversation ", newMessage });
         }
 
-        console.log("conversation",)
     } catch (error) {
         console.log(error)
         res.status(500).json({ message: error.message });
     }
+
+
 
 
 }
